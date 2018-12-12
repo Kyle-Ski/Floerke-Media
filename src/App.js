@@ -148,7 +148,7 @@ class App extends Component {
         <Form.Group widths='equal'>
           <Form.Input required fluid label='Email' onChange={(e) => this.setState({email : e.target.value})} value={this.state.email} placeholder='Example@example.com' />
           <Form.Input required fluid label='Phone #' onChange={(e) => this.setState({phone : e.target.value})} value={this.state.phone} placeholder='Phone #' />
-          <Form.Input fluid onChange={(e) => this.setState({whenToContact: e.target.value})} value={this.state.whenToContact} required fluid label='When is a good time to contact you?' placeholder='Let me know when!' />
+          <Form.Input fluid onChange={(e) => this.setState({whenToContact: e.target.value})} value={this.state.whenToContact} label='When is a good time to contact you?' placeholder='Let me know when!' />
         </Form.Group>
         <Form.TextArea label='Message to Matt:' onChange={(e) => this.setState({message: e.target.value})} value={this.state.message} placeholder='Tell us more about your student...' />
         <Form.Checkbox toggle onChange={()=> this.setState({checked: !this.state.checked})} label='I Would like to get in contact ASAP' />
