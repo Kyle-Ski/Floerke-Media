@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Menu, Segment, Header, Message, Loader } from 'semantic-ui-react'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Switch } from 'react-router-dom'
 import About from './components/About'
 import Reviews from './components/Reviews'
+import NoTfound from './components/NoTfound'
+import Home from './components/Home'
 import './App.css';
 
 //1. create form to sign up X
@@ -36,7 +38,9 @@ class App extends Component {
     message: '',
     warning: null,
     whenToContact: '',
-    loaded: false
+    loaded: false,
+    error: null,
+    reviews: []
   }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -85,11 +89,30 @@ class App extends Component {
     .catch(err => console.error(err))
 }
 
-  componentDidMount(){
-    this.setState({loaded: true})
+  errorHandler = (err) => {
+    console.error(err)
+    this.setState({error: true})
   }
+
+  fetchReviews = () => {
+    return fetch('http://localhost:3222/reviews')
+    .then(res => res.json())
+    .then(res => this.setState({reviews: res.reviews}))
+  }
+
+  concatReviews = (res) => {
+    this.setState({reviews: [...this.state.reviews, res]})
+    return res
+  } 
+
+  componentDidMount(){
+    this.fetchReviews()
+      .then(() => this.setState({loaded: true}))
+      .catch(this.errorHandler)
+  }
+
   render() {
-    const { value, activeItem } = this.state
+    const { value, activeItem, reviews } = this.state
     return (
       <div>
       {this.state.loaded ? <div><div className='nav'>
@@ -105,15 +128,13 @@ class App extends Component {
         <Menu.Item as='a' href='#form' name='Contact' active={activeItem === 'Contact'} onClick={this.handleItemClick}>
           Contact
         </Menu.Item>
-
+        <Link to='/reviews'>
         <Menu.Item
           name='Reviews'
           active={activeItem === 'Reviews'}
           onClick={this.handleItemClick}
-        >
-          
-          <Link to='/reviews'>Reviews</Link>
-        </Menu.Item>
+        />
+        </Link>
         <Menu.Item
           name='Acolades'
           active={activeItem === 'Acolades'}
@@ -124,8 +145,12 @@ class App extends Component {
         </Menu.Item>
       </Menu>
       </div>
-      <Route path="/about" component={About}/>
-      <Route path="/reviews" component={Reviews}/>
+      <Switch>
+        <Route exact path="/" component={Home}/>
+        <Route path="/about" component={About}/>
+        <Route path="/reviews" render={props => <Reviews {...props} reviews={reviews} fetchReviews={this.fetchReviews} concatReviews={this.concatReviews}/>}/>
+        <Route component={NoTfound} />
+      </Switch>
       <Header as='h1' textAlign='center'>Contact:</Header>
       <Segment raised color='black'>
       <Form id='form' onSubmit={this.postMessage} className={this.state.warning}>
