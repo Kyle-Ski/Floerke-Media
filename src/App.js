@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Menu, Segment, Header, Message } from 'semantic-ui-react'
+import { Form, Menu, Segment, Header, Message, Loader } from 'semantic-ui-react'
 import { Route, Link } from 'react-router-dom'
 import About from './components/About'
+import Reviews from './components/Reviews'
 import './App.css';
 
 //1. create form to sign up X
@@ -34,7 +35,8 @@ class App extends Component {
     phone: '',
     message: '',
     warning: null,
-    whenToContact: ''
+    whenToContact: '',
+    loaded: false
   }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -81,13 +83,16 @@ class App extends Component {
       return res
     })
     .catch(err => console.error(err))
-  
 }
+
+  componentDidMount(){
+    this.setState({loaded: true})
+  }
   render() {
     const { value, activeItem } = this.state
     return (
       <div>
-      <div className='nav'>
+      {this.state.loaded ? <div><div className='nav'>
       <Menu inverted stackable>
         <Menu.Item
           name='About'
@@ -102,15 +107,25 @@ class App extends Component {
         </Menu.Item>
 
         <Menu.Item
-          name='upcomingEvents'
-          active={activeItem === 'upcomingEvents'}
+          name='Reviews'
+          active={activeItem === 'Reviews'}
           onClick={this.handleItemClick}
         >
-          Upcoming Events
+          
+          <Link to='/reviews'>Reviews</Link>
+        </Menu.Item>
+        <Menu.Item
+          name='Acolades'
+          active={activeItem === 'Acolades'}
+          onClick={this.handleItemClick}
+        >
+          
+          <Link to='/acolades'>Acolades</Link>
         </Menu.Item>
       </Menu>
       </div>
       <Route path="/about" component={About}/>
+      <Route path="/reviews" component={Reviews}/>
       <Header as='h1' textAlign='center'>Contact:</Header>
       <Segment raised color='black'>
       <Form id='form' onSubmit={this.postMessage} className={this.state.warning}>
@@ -155,7 +170,7 @@ class App extends Component {
         <Message success header='Form Completed' content="Thank you for your intrest! I will be in contact with you soon!" />
         <Form.Button fluid>Submit</Form.Button>
       </Form>
-      </Segment>
+      </Segment></div> : <div><Loader active>Loading...</Loader></div>}      
       </div>
     )
   }}
