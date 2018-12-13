@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Form, Menu, Segment, Header, Message, Loader } from 'semantic-ui-react'
+import { Form, Menu, Segment, Header, Message, Loader, Responsive } from 'semantic-ui-react'
 import { Route, Link, Switch } from 'react-router-dom'
 import About from './components/About'
 import Reviews from './components/Reviews'
 import NoTfound from './components/NoTfound'
 import Home from './components/Home'
+import MainNav from './components/MainNav'
+import MobileNav from './components/MobileNav'
 import './App.css';
 
 //1. create form to sign up X
@@ -43,8 +45,17 @@ class App extends Component {
     reviews: [],
     avgReview: 0
   }
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
+  getASAP = () => this.setState({ checked: !this.state.checked })
+  getPhone = (e) => this.setState({ phone: e.target.value })
+  getEmail = (e) => this.setState({ email: e.target.value })
+  getMessage = (e) => this.setState({ message: e.target.value })
+  getWhenToContact = (e) => this.setState({ whenToContact: e.target.value })
+  getStudentLast = (e) => this.setState({ studentLast: e.target.value })
+  getStudentFirst = (e) => this.setState({ studentFirst: e.target.value })
+  getParentLast = (e) => this.setState({ parentLast: e.target.value })
+  getParentFirst = (e) => this.setState({ parentFirst: e.target.value })
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   handleChange = (e, { value }) => this.setState({ radioValue: value })
   handleDropChange = (e, { value }) => this.setState({ value })
 
@@ -127,94 +138,79 @@ class App extends Component {
     const { value, activeItem, reviews } = this.state
     return (
       <div>
-      {this.state.loaded ? <div><div className='nav'>
-      <Menu inverted stackable>
-      <Menu.Item
-          name='Home'
-          active={activeItem === 'Home'}
-          onClick={this.handleItemClick}
-        >
-          <Link to='/'>Home</Link>
-        </Menu.Item>
-        <Menu.Item
-          name='About'
-          active={activeItem === 'About'}
-          onClick={this.handleItemClick}
-        >
-          <Link to='/about'>About</Link>
-        </Menu.Item>
-
-        <Menu.Item as='a' href='#form' name='Contact' active={activeItem === 'Contact'} onClick={this.handleItemClick}>
-          Contact
-        </Menu.Item>
-        <Link to='/reviews'>
-        <Menu.Item
-          name='Reviews'
-          active={activeItem === 'Reviews'}
-          onClick={this.handleItemClick}
-        />
-        </Link>
-        <Menu.Item
-          name='Acolades'
-          active={activeItem === 'Acolades'}
-          onClick={this.handleItemClick}
-        >
-          
-          <Link to='/acolades'>Acolades</Link>
-        </Menu.Item>
-      </Menu>
-      </div>
+      {this.state.loaded ? <div>
+      <Responsive minWidth={768}>
+      <MainNav 
+        getASAP={this.getASAP}
+        getPhone={this.getPhone}
+        getEmail={this.getEmail}
+        getMessage={this.getMessage}
+        getWhenToContact={this.getWhenToContact}
+        getStudentLast={this.getStudentLast}
+        getStudentFirst={this.getStudentFirst}
+        getParentLast={this.getParentLast}
+        getParentFirst={this.getParentFirst}
+        fetchReviews={this.fetchReviews}
+        reviews={reviews}
+        handleItemClick={this.handleItemClick} 
+        activeItem={activeItem}
+        postMessage={this.postMessage}
+        warning={this.state.warning}
+        parentFirst={this.state.parentFirst}
+        parentLast={this.state.parentLast}
+        studentFirst={this.state.studentFirst}
+        studentLast={this.state.studentLast}
+        value={value}
+        handleDropChange={this.state.handleDropChange}
+        options={options}
+        radioValue={this.state.radioValue}
+        handleChange={this.handleChange}
+        email={this.state.email}
+        phone={this.state.phone}
+        whenToContact={this.state.whenToContact}
+        message={this.state.message}
+        checked={this.state.checked}
+      />
+      </Responsive>
+      <Responsive maxWidth={767}>
+      <MobileNav 
+        getASAP={this.getASAP}
+        getPhone={this.getPhone}
+        getEmail={this.getEmail}
+        getMessage={this.getMessage}
+        getWhenToContact={this.getWhenToContact}
+        getStudentLast={this.getStudentLast}
+        getStudentFirst={this.getStudentFirst}
+        getParentLast={this.getParentLast}
+        getParentFirst={this.getParentFirst}
+        fetchReviews={this.fetchReviews}
+        reviews={reviews}
+        handleItemClick={this.handleItemClick} 
+        activeItem={activeItem}
+        postMessage={this.postMessage}
+        warning={this.state.warning}
+        parentFirst={this.state.parentFirst}
+        parentLast={this.state.parentLast}
+        studentFirst={this.state.studentFirst}
+        studentLast={this.state.studentLast}
+        value={value}
+        handleDropChange={this.state.handleDropChange}
+        options={options}
+        radioValue={this.state.radioValue}
+        handleChange={this.handleChange}
+        email={this.state.email}
+        phone={this.state.phone}
+        whenToContact={this.state.whenToContact}
+        message={this.state.message}
+        checked={this.state.checked}
+      />
+      </Responsive> 
       <Switch>
-        <Route exact path="/" component={Home}/>
-        <Route path="/about" component={About}/>
-        <Route path="/reviews" render={props => <Reviews {...props} reviews={reviews} fetchReviews={this.fetchReviews} concatReviews={this.concatReviews}/>}/>
-        <Route component={NoTfound} />
-      </Switch>
-      <Header as='h1' textAlign='center'>Contact:</Header>
-      <Segment raised color='black'>
-      <Form id='form' onSubmit={this.postMessage} className={this.state.warning}>
-        <Form.Group widths='equal'>
-          <Form.Input onChange={(e) => this.setState({parentFirst: e.target.value})} value={this.state.parentFirst} required fluid label='Your First name' placeholder='First name' />
-          <Form.Input onChange={(e) => this.setState({parentLast: e.target.value})} value={this.state.parentLast} required fluid label='Your Last name' placeholder='Last name' />
-        </Form.Group>
-        <Form.Group widths='equal'>
-          <Form.Input onChange={(e) => this.setState({studentFirst: e.target.value})} value={this.state.studentFirst} required fluid label='Student First name' placeholder='First name' />
-          <Form.Input onChange={(e) => this.setState({studentLast: e.target.value})} value={this.state.studentLast} required fluid label='Student Last name' placeholder='Last name' />
-          <Form.Select required fluid selection value={value} onChange={this.handleDropChange} label='Subject' options={options} placeholder='Subject' />
-        </Form.Group>
-        <Form.Group inline>
-
-         
-          <Form.Radio
-            label='More Info Please'
-            value='sm'
-            checked={this.state.radioValue === 'sm'}
-            onChange={this.handleChange}
-          />
-          <Form.Radio
-            label='Set Up Appointment'
-            value='md'
-            checked={this.state.radioValue === 'md'}
-            onChange={this.handleChange}
-          />
-          <Form.Radio
-            label='Ect'
-            value='lg'
-            checked={this.state.radioValue === 'lg'}
-            onChange={this.handleChange}
-          />
-        </Form.Group>
-        <Form.Group widths='equal'>
-          <Form.Input required fluid label='Email' onChange={(e) => this.setState({email : e.target.value})} value={this.state.email} placeholder='Example@example.com' />
-          <Form.Input required fluid label='Phone #' onChange={(e) => this.setState({phone : e.target.value})} value={this.state.phone} placeholder='Phone #' />
-          <Form.Input fluid onChange={(e) => this.setState({whenToContact: e.target.value})} value={this.state.whenToContact} label='When is a good time to contact you?' placeholder='Let me know when!' />
-        </Form.Group>
-        <Form.TextArea label='Message to Matt:' onChange={(e) => this.setState({message: e.target.value})} value={this.state.message} placeholder='Tell us more about your student...' />
-        <Form.Checkbox toggle onChange={()=> this.setState({checked: !this.state.checked})} label='I Would like to get in contact ASAP' />
-        <Message success header='Form Completed' content="Thank you for your intrest! I will be in contact with you soon!" />
-        <Form.Button fluid>Submit</Form.Button>
-      </Form>
-      </Segment></div> : <div><Loader active>Loading...</Loader></div>}      
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/reviews" render={props => <Reviews {...props} reviews={reviews} fetchReviews={this.fetchReviews} concatReviews={this.concatReviews} />} />
+          <Route component={NoTfound} />
+      </Switch></div>: <div><Loader active>Loading...</Loader></div>}      
       </div>
     )
   }}
