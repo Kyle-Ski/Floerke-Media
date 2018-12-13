@@ -40,7 +40,8 @@ class App extends Component {
     whenToContact: '',
     loaded: false,
     error: null,
-    reviews: []
+    reviews: [],
+    avgReview: 0
   }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -58,7 +59,8 @@ class App extends Component {
       phone: this.state.phone,
       message: this.state.message,
       subject: this.state.value,
-      asap: this.state.checked
+      asap: this.state.checked,
+      whenToContact: this.state.whenToContact
     }
     fetch('http://localhost:3222/send',{
       method: 'POST',
@@ -98,6 +100,16 @@ class App extends Component {
     return fetch('http://localhost:3222/reviews')
     .then(res => res.json())
     .then(res => this.setState({reviews: res.reviews}))
+    .then(this.getAvgReviews)
+  }
+
+  getAvgReviews = () => {
+    const total = this.state.reviews.reduce((accum, review) => {
+      return accum + review.rating
+    },0)
+    const avg = total/this.state.reviews.length 
+    this.setState({avgReview: avg.toFixed(2)})
+    return avg.toFixed(2)
   }
 
   concatReviews = (res) => {
@@ -117,6 +129,13 @@ class App extends Component {
       <div>
       {this.state.loaded ? <div><div className='nav'>
       <Menu inverted stackable>
+      <Menu.Item
+          name='Home'
+          active={activeItem === 'Home'}
+          onClick={this.handleItemClick}
+        >
+          <Link to='/'>Home</Link>
+        </Menu.Item>
         <Menu.Item
           name='About'
           active={activeItem === 'About'}
