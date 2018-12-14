@@ -33,7 +33,7 @@ class Reviews extends Component {
         if(data.description.length > 505){
             this.setState({warning: 'warning'})
         } else {
-            fetch('http://localhost:3222/reviews',{
+            fetch('https://mat-flow.herokuapp.com/reviews',{
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json; charset=utf-8"

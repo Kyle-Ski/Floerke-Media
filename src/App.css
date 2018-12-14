@@ -1,3 +1,7 @@
+body{
+  height: 100%;
+  width: 100%;
+}
 .App {
   text-align: center;
 }
@@ -8,6 +12,21 @@
 
 .ui.inverted.stackable.menu {
   height: 10vh;
+}
+
+.scroll {
+  opacity: 0.3;
+  background-color: gray;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 5px;
+  border: none;
+}
+.scroll:hover{
+  opacity: 1;
 }
 
 .about {
