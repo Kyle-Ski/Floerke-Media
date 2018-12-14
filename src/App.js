@@ -5,6 +5,7 @@ import About from './components/About'
 import Reviews from './components/Reviews'
 import NoTfound from './components/NoTfound'
 import Home from './components/Home'
+import Recources from './components/Recources'
 import ScrollButton from './components/ScrollButton'
 import './App.css';
 
@@ -36,6 +37,14 @@ const style = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
+  },
+  main: {
+    borderBottom: 'solid darkred 6px'
+  },
+  footer: {
+    borderTop: 'solid darkred 6px',
+    display: 'flex',
+    justifyContent: 'center'
   }
 }
 
@@ -158,40 +167,55 @@ class App extends Component {
       <div>
         {this.state.loaded ? <div>
           <Responsive minWidth={768}>
-            <div className='nav'>
+            <div className='nav' style={style.main}>
               <Menu inverted stackable>
+              <Menu.Item>
+              <Link to='/'>
                 <Menu.Item
                   name='Home'
                   active={activeItem === 'Home'}
                   onClick={this.handleItemClick}
                 >
-                  <Link to='/'>Home</Link>
+                  Home
                 </Menu.Item>
+                </Link>
+                </Menu.Item>
+                <Menu.Item>
+                <Link to='/about'>
                 <Menu.Item
                   name='About'
                   active={activeItem === 'About'}
                   onClick={this.handleItemClick}
                 >
-                  <Link to='/about'>About</Link>
+                  About
                 </Menu.Item>
-
+                </Link>
+                </Menu.Item>
+                <Menu.Item>
                 <Menu.Item as='a' href='#form' name='Contact' active={activeItem === 'Contact'} onClick={this.handleItemClick}>
                   Contact
                 </Menu.Item>
-
+                </Menu.Item>
+                <Menu.Item>
+                <Link to='/reviews'>
                 <Menu.Item
                   name='Reviews'
                   active={activeItem === 'Reviews'}
                   onClick={this.handleItemClick}
-                ><Link to='/reviews'>Reviews</Link></Menu.Item>
-
+                >Reviews
+                </Menu.Item>
+                </Link>
+                </Menu.Item>
+                <Menu.Item>
+                <Link to='/recources'>
                 <Menu.Item
-                  name='Acolades'
-                  active={activeItem === 'Acolades'}
+                  name='Recources'
+                  active={activeItem === 'Recources'}
                   onClick={this.handleItemClick}
                 >
-
-                  <Link to='/acolades'>Acolades</Link>
+                  Recources
+                </Menu.Item>
+                </Link>
                 </Menu.Item>
               </Menu>
             </div>
@@ -199,6 +223,7 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
               <Route path="/reviews" render={props => <Reviews {...props} reviews={reviews} fetchReviews={this.fetchReviews} concatReviews={this.concatReviews} />} />
+              <Route path="/recources" component={Recources} />
               <Route component={NoTfound} />
             </Switch>
             <Header as='h1' textAlign='center'>Contact:</Header>
@@ -246,6 +271,20 @@ class App extends Component {
                 <Form.Button fluid>Submit</Form.Button>
               </Form>
             </Segment>
+            <Menu inverted style={style.footer}>
+              <Menu.Item>
+              <a href='https://www.google.com' target='_blank'>Contact</a>
+              </Menu.Item>
+              <Menu.Item>
+              <a href='https://www.google.com' target='_blank'>Email</a>
+              </Menu.Item>
+              <Menu.Item>
+              <a href='https://www.google.com' target='_blank'>Phone</a>
+              </Menu.Item>
+              <Menu.Item>
+              <Link to='/'>Home</Link>
+              </Menu.Item>
+            </Menu>
           </Responsive>
           <Responsive maxWidth={767} >
             <Sidebar.Pushable as={Segment} style={{ marginLeft: '0', marginRight: '0' }}>
@@ -268,8 +307,8 @@ class App extends Component {
               >
               <Link to='/'>
                 <Menu.Item onClick={this.handleSidebarHide}>
-                  
-                  Home<Icon name='home' />
+                <Icon name='home' />
+                  Home
                 </Menu.Item>
                 </Link>
                 <Link to='/about'>
@@ -284,11 +323,18 @@ class App extends Component {
                  Reviews
                 </Menu.Item>
                 </Link>
+                <Link to='/recources'>
+                <Menu.Item onClick={this.handleSidebarHide}>
+                  <Icon name='cogs' />
+                 Recources
+                </Menu.Item>
+                </Link>
+                
+                <Menu.Item style={style.contact}>
                 <Menu.Item as='a' href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' target="_blank">
                   <Icon name='file' />
                   Resume
                 </Menu.Item>
-                <Menu.Item style={style.contact}>
                   <Menu.Item as='a' href='https://www.linkedin.com/in/mathew-floerke-b71471115/' target="_blank">
                     <Icon name='linkedin' />
                     LinkedIn
@@ -311,6 +357,7 @@ class App extends Component {
                   <Route exact path="/" component={Home} />
                   <Route path="/about" component={About} />
                   <Route path="/reviews" render={props => <Reviews {...props} reviews={reviews} fetchReviews={this.fetchReviews} concatReviews={this.concatReviews} />} />
+                  <Route path="/recources" component={Recources} />
                   <Route component={NoTfound} />
                 </Switch>
                 <Header as='h1' textAlign='center'>Contact:</Header>
@@ -362,7 +409,7 @@ class App extends Component {
               </Sidebar.Pusher>
             </Sidebar.Pushable>
           </Responsive>
-          <ScrollButton scrollStepInPx="50" delayInMs="16.66"/>
+          <ScrollButton scrollStepInPx="100" delayInMs="10.66"/>
         </div> : <div><Loader active>Loading...</Loader></div>}
       </div>
     )
