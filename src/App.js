@@ -266,18 +266,24 @@ class App extends Component {
                 position='fixed'
                 style={style.side}
               >
+              <Link to='/'>
                 <Menu.Item onClick={this.handleSidebarHide}>
-                  <Icon name='home' />
-                  <Link to='/'>Home</Link>
+                  
+                  Home<Icon name='home' />
                 </Menu.Item>
+                </Link>
+                <Link to='/about'>
                 <Menu.Item onClick={this.handleSidebarHide}>
                   <Icon name='vcard' />
-                  <Link to='/about'>About</Link>
+                  About
                 </Menu.Item>
+                </Link>
+                <Link to='/reviews'>
                 <Menu.Item onClick={this.handleSidebarHide}>
                   <Icon name='thumbs up outline' />
-                  <Link to='/reviews'>Reviews</Link>
+                 Reviews
                 </Menu.Item>
+                </Link>
                 <Menu.Item as='a' href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' target="_blank">
                   <Icon name='file' />
                   Resume
