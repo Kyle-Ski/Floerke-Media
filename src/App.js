@@ -6,6 +6,7 @@ import Reviews from './components/Reviews'
 import NoTfound from './components/NoTfound'
 import Home from './components/Home'
 import Recources from './components/Recources'
+import Contact from './components/Contact'
 import ScrollButton from './components/ScrollButton'
 import './App.css';
 
@@ -192,7 +193,7 @@ class App extends Component {
                 </Link>
                 </Menu.Item>
                 <Menu.Item>
-                <Menu.Item as='a' href='#form' name='Contact' active={activeItem === 'Contact'} onClick={this.handleItemClick}>
+                <Menu.Item as='a' href='#contact' name='Contact' active={activeItem === 'Contact'} onClick={this.handleItemClick}>
                   Contact
                 </Menu.Item>
                 </Menu.Item>
@@ -213,7 +214,7 @@ class App extends Component {
                   active={activeItem === 'Recources'}
                   onClick={this.handleItemClick}
                 >
-                  Recources
+                  Resources
                 </Menu.Item>
                 </Link>
                 </Menu.Item>
@@ -224,65 +225,21 @@ class App extends Component {
               <Route path="/about" component={About} />
               <Route path="/reviews" render={props => <Reviews {...props} reviews={reviews} fetchReviews={this.fetchReviews} concatReviews={this.concatReviews} />} />
               <Route path="/recources" component={Recources} />
+              <Route path="/contact" component={Contact} />
               <Route component={NoTfound} />
             </Switch>
-            <Header as='h1' textAlign='center'>Contact:</Header>
-            <Segment raised color='black'>
-              <Form id='form' onSubmit={this.postMessage} className={this.state.warning}>
-                <Form.Group widths='equal'>
-                  <Form.Input onChange={(e) => this.setState({ parentFirst: e.target.value })} value={this.state.parentFirst} required fluid label='Your First name' placeholder='First name' />
-                  <Form.Input onChange={(e) => this.setState({ parentLast: e.target.value })} value={this.state.parentLast} required fluid label='Your Last name' placeholder='Last name' />
-                </Form.Group>
-                <Form.Group widths='equal'>
-                  <Form.Input onChange={(e) => this.setState({ studentFirst: e.target.value })} value={this.state.studentFirst} required fluid label='Student First name' placeholder='First name' />
-                  <Form.Input onChange={(e) => this.setState({ studentLast: e.target.value })} value={this.state.studentLast} required fluid label='Student Last name' placeholder='Last name' />
-                  <Form.Select required fluid selection value={value} onChange={this.handleDropChange} label='Subject' options={options} placeholder='Subject' />
-                </Form.Group>
-                <Form.Group inline>
-
-
-                  <Form.Radio
-                    label='More Info Please'
-                    value='sm'
-                    checked={this.state.radioValue === 'sm'}
-                    onChange={this.handleChange}
-                  />
-                  <Form.Radio
-                    label='Set Up Appointment'
-                    value='md'
-                    checked={this.state.radioValue === 'md'}
-                    onChange={this.handleChange}
-                  />
-                  <Form.Radio
-                    label='Ect'
-                    value='lg'
-                    checked={this.state.radioValue === 'lg'}
-                    onChange={this.handleChange}
-                  />
-                </Form.Group>
-                <Form.Group widths='equal'>
-                  <Form.Input required fluid label='Email' onChange={(e) => this.setState({ email: e.target.value })} value={this.state.email} placeholder='Example@example.com' />
-                  <Form.Input required fluid label='Phone #' onChange={(e) => this.setState({ phone: e.target.value })} value={this.state.phone} placeholder='Phone #' />
-                  <Form.Input fluid onChange={(e) => this.setState({ whenToContact: e.target.value })} value={this.state.whenToContact} label='When is a good time to contact you?' placeholder='Let me know when!' />
-                </Form.Group>
-                <Form.TextArea label='Message to Matt:' onChange={(e) => this.setState({ message: e.target.value })} value={this.state.message} placeholder='Tell us more about your student...' />
-                <Form.Checkbox toggle onChange={() => this.setState({ checked: !this.state.checked })} label='I Would like to get in contact ASAP' />
-                <Message success header='Form Completed' content="Thank you for your intrest! I will be in contact with you soon!" />
-                <Form.Button fluid>Submit</Form.Button>
-              </Form>
-            </Segment>
             <Menu inverted style={style.footer}>
               <Menu.Item>
-              <a href='https://www.google.com' target='_blank'>Contact</a>
+                <Link to='/'>Home</Link>
               </Menu.Item>
               <Menu.Item>
-              <a href='https://www.google.com' target='_blank'>Email</a>
+              <a href='#contact'>Contact</a>
               </Menu.Item>
               <Menu.Item>
-              <a href='https://www.google.com' target='_blank'>Phone</a>
+              <a href='mailto:mat.floerke@gmail.com'>Email</a>
               </Menu.Item>
               <Menu.Item>
-              <Link to='/'>Home</Link>
+              <a href='tel: +1-707-772-7442'>Phone</a>
               </Menu.Item>
             </Menu>
           </Responsive>
@@ -326,10 +283,15 @@ class App extends Component {
                 <Link to='/recources'>
                 <Menu.Item onClick={this.handleSidebarHide}>
                   <Icon name='cogs' />
-                 Recources
+                 Resources
                 </Menu.Item>
                 </Link>
-                
+                <Link to='/contact'>
+                <Menu.Item onClick={this.handleSidebarHide}>
+                  <Icon name='vcard' />
+                  Contact
+                </Menu.Item>
+                </Link>
                 <Menu.Item style={style.contact}>
                 <Menu.Item as='a' href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' target="_blank">
                   <Icon name='file' />
@@ -339,7 +301,7 @@ class App extends Component {
                     <Icon name='linkedin' />
                     LinkedIn
                   </Menu.Item>
-                  <Menu.Item as='a' href="mailto:mat.floerke@gmail.com ">
+                  <Menu.Item as='a' href="mailto:mat.floerke@gmail.com">
                     <Icon name='mail' />
                     Email
                                 </Menu.Item>
@@ -358,53 +320,11 @@ class App extends Component {
                   <Route path="/about" component={About} />
                   <Route path="/reviews" render={props => <Reviews {...props} reviews={reviews} fetchReviews={this.fetchReviews} concatReviews={this.concatReviews} />} />
                   <Route path="/recources" component={Recources} />
+                  <Route path="/contact" component={Contact} />
                   <Route component={NoTfound} />
                 </Switch>
-                <Header as='h1' textAlign='center'>Contact:</Header>
-                <Segment raised color='black'>
-                  <Form id='form' onSubmit={this.postMessage} className={this.state.warning}>
-                    <Form.Group widths='equal'>
-                      <Form.Input onChange={(e) => this.setState({ parentFirst: e.target.value })} value={this.state.parentFirst} required fluid label='Your First name' placeholder='First name' />
-                      <Form.Input onChange={(e) => this.setState({ parentLast: e.target.value })} value={this.state.parentLast} required fluid label='Your Last name' placeholder='Last name' />
-                    </Form.Group>
-                    <Form.Group widths='equal'>
-                      <Form.Input onChange={(e) => this.setState({ studentFirst: e.target.value })} value={this.state.studentFirst} required fluid label='Student First name' placeholder='First name' />
-                      <Form.Input onChange={(e) => this.setState({ studentLast: e.target.value })} value={this.state.studentLast} required fluid label='Student Last name' placeholder='Last name' />
-                      <Form.Select required fluid selection value={value} onChange={this.handleDropChange} label='Subject' options={options} placeholder='Subject' />
-                    </Form.Group>
-                    <Form.Group inline>
-
-
-                      <Form.Radio
-                        label='More Info Please'
-                        value='sm'
-                        checked={this.state.radioValue === 'sm'}
-                        onChange={this.handleChange}
-                      />
-                      <Form.Radio
-                        label='Set Up Appointment'
-                        value='md'
-                        checked={this.state.radioValue === 'md'}
-                        onChange={this.handleChange}
-                      />
-                      <Form.Radio
-                        label='Ect'
-                        value='lg'
-                        checked={this.state.radioValue === 'lg'}
-                        onChange={this.handleChange}
-                      />
-                    </Form.Group>
-                    <Form.Group widths='equal'>
-                      <Form.Input required fluid label='Email' onChange={(e) => this.setState({ email: e.target.value })} value={this.state.email} placeholder='Example@example.com' />
-                      <Form.Input required fluid label='Phone #' onChange={(e) => this.setState({ phone: e.target.value })} value={this.state.phone} placeholder='Phone #' />
-                      <Form.Input fluid onChange={(e) => this.setState({ whenToContact: e.target.value })} value={this.state.whenToContact} label='When is a good time to contact you?' placeholder='Let me know when!' />
-                    </Form.Group>
-                    <Form.TextArea label='Message to Matt:' onChange={(e) => this.setState({ message: e.target.value })} value={this.state.message} placeholder='Tell us more about your student...' />
-                    <Form.Checkbox toggle onChange={() => this.setState({ checked: !this.state.checked })} label='I Would like to get in contact ASAP' />
-                    <Message success header='Form Completed' content="Thank you for your intrest! I will be in contact with you soon!" />
-                    <Form.Button fluid>Submit</Form.Button>
-                  </Form>
-                </Segment>
+                
+                
                 
               </Sidebar.Pusher>
             </Sidebar.Pushable>

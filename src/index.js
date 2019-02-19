@@ -5,11 +5,14 @@ import App from './App';
 import { HashRouter as Router } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css';
+import AppContext from './context'
 
 ReactDOM.render(
-    <Router>
-        <App />
-    </Router>, document.getElementById('root'));
+    <AppContext.Provider>
+        <Router>
+            <App />
+        </Router>
+    </AppContext.Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
