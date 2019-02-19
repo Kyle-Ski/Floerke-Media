@@ -49,17 +49,8 @@ const style = {
   }
 }
 
-const options = [
-  { key: 'p', text: 'Physics', value: 'Physics' },
-  { key: 's', text: 'Science', value: 'Science' },
-  { key: 'c', text: 'Chemistry', value: 'Chemistry' },
-  { key: 'm', text: 'Math', value: 'Math' },
-  { key: 'u', text: 'Multiple', value: 'Multiple' },
-]
-
 class App extends Component {
   state = {
-    radioValue: null,
     checked: false,
     parentFirst: '',
     parentLast: '',
@@ -84,51 +75,6 @@ class App extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-  handleChange = (e, { value }) => this.setState({ radioValue: value })
-  handleDropChange = (e, { value }) => this.setState({ value })
-
-  postMessage = (e) => {
-    e.preventDefault()
-    const data = {
-      parentFname: this.state.parentFirst,
-      parentLname: this.state.parentLast,
-      studentFname: this.state.studentFirst,
-      studentLname: this.state.studentLast,
-      email: this.state.email,
-      phone: this.state.phone,
-      message: this.state.message,
-      subject: this.state.value,
-      asap: this.state.checked,
-      whenToContact: this.state.whenToContact
-    }
-    fetch('https://mat-flow.herokuapp.com/send', {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.success) {
-          this.setState({
-            warning: 'success',
-            radioValue: null,
-            parentFirst: '',
-            parentLast: '',
-            studentFirst: '',
-            studentLast: '',
-            value: '',
-            email: '',
-            phone: '',
-            message: '',
-          })
-        }
-        return res
-      })
-      .catch(err => console.error(err))
-  }
 
   errorHandler = (err) => {
     console.error(err)
@@ -163,7 +109,7 @@ class App extends Component {
   }
 
   render() {
-    const { value, activeItem, reviews, visible } = this.state
+    const { activeItem, reviews, visible } = this.state
     return (
       <div>
         {this.state.loaded ? <div>

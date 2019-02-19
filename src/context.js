@@ -4,7 +4,6 @@ const Context = React.createContext()
 
 class AppContextProvider extends React.Component {
     state = {
-        radioValue: null,
         checked: false,
         parentFirst: '',
         parentLast: '',
@@ -26,13 +25,13 @@ class AppContextProvider extends React.Component {
         grade: [
             { key: 'p', text: '1st - 6th', value: '1st - 6th' },
             { key: 's', text: '7th', value: '7th' },
-            { key: 'c', text: '8th', value: '8th' },
-            { key: 'm', text: '9th', value: '9th' },
-            { key: 'u', text: '10th', value: '10th' },
-            { key: 'u', text: '11th', value: '11th' },
-            { key: 'u', text: '12th', value: '12th' },
+            { key: 'e', text: '8th', value: '8th' },
+            { key: 'n', text: '9th', value: '9th' },
+            { key: 't', text: '10th', value: '10th' },
+            { key: 'el', text: '11th', value: '11th' },
+            { key: 't', text: '12th', value: '12th' },
             { key: 'u', text: 'Undergraduate', value: 'Undergraduate' },
-            { key: 'u', text: 'Other', value: 'Other' },
+            { key: 'o', text: 'Other', value: 'Other' },
         ],
         options: [
             { key: 'm', text: 'Mathematics', value: 'Mathematics' },
