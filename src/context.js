@@ -50,6 +50,24 @@ class AppContextProvider extends React.Component {
         })
     }
 
+    getAvgReviews = () => {
+        const total = this.state.reviews.reduce((accum, review) => {
+            return accum + review.rating
+        }, 0)
+        const avg = total / this.state.reviews.length
+        this.setState({ avgReview: avg.toFixed(2) })
+        return avg.toFixed(2)
+    }
+    
+
+    fetchReviews = () => {
+        return fetch('https://mat-flow.herokuapp.com/reviews')
+            .then(res => res.json())
+            .then(res => this.setState({ reviews: res.reviews }))
+            .then(this.getAvgReviews)
+    }
+    
+
     postMessage = (e) => {
         e.preventDefault()
         const data = {
@@ -107,7 +125,8 @@ class AppContextProvider extends React.Component {
                     actions: {
                         handleDropChange: this.handleDropChange,
                         postMessage: this.postMessage,
-                        handleChange: this.handleChange
+                        handleChange: this.handleChange,
+                        fetchReviews: this.fetchReviews
                     },
                 }}
             >
